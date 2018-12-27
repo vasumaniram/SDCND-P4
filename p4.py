@@ -32,26 +32,26 @@ def cnn_model(X_train,y_train):
     model.add(Lambda(lambda x : (x / 255.0) - 0.5,input_shape=(160,320,3)))
     model.add(Cropping2D(cropping=((70,25),(0,0))))
     
-    model.add(Convolution2D(24,5,5,sunsample=(2,2),activation='relu'))
+    model.add(Convolution2D(24,5,5,subsample=(2,2),activation='relu'))
     #model.add(MaxPooling2D())
     model.add(Convolution2D(36,5,5,subsample=(2,2),activation='relu'))
     #model.add(MaxPooling2D())
     model.add(Convolution2D(48,5,5,subsample=(2,2),activation='relu'))
     model.add(Convolution2D(64,3,3,activation='relu'))
-    model.add(Consolution2D(64,3,3,activation='relu'))
+    model.add(Convolution2D(64,3,3,activation='relu'))
     model.add(Flatten())
     model.add(Dense(100))
     model.add(Dense(50))
     model.add(Dense(10))
     model.add(Dense(1))
     model.compile(loss='mse', optimizer='adam')
-    model.fit(X_train,y_train,validation_split=0.2,shuffle=True,epochs=2)
+    model.fit(X_train,y_train,validation_split=0.2,shuffle=True,epochs=5)
     model.save('model.h5')
     
 def pipeline():    
     X_train,y_train = get_training_data()
     print(len(y_train))
-    #cnn_model(X_train,y_train)
+    cnn_model(X_train,y_train)
 pipeline()
     
     
