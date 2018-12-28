@@ -54,7 +54,7 @@ def generator(samples,batch_size=64):
     num_samples = len(samples)
     while 1:
         sklearn.utils.shuffle(samples)
-        current_path = '../data/IMG/'
+        current_path = '../COLLECTED_DATA/IMG/'
         correction_factor = [0.0]#,0.2,-0.2]
         flipped_correction_factor = [0.0]#,-0.2,0.2]
         for offset in range(0,num_samples,batch_size):
@@ -64,7 +64,7 @@ def generator(samples,batch_size=64):
             for batch_sample in batch_samples:
                 for i,position in enumerate(['center']):#,'left','right']):
                     source_path = batch_sample[position]
-                    file_name = source_path.split('/')[-1]
+                    file_name = source_path.split('\\')[-1]
                     image = cv2.imread(current_path + file_name)
                     image = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
                     images.append(image)
@@ -107,7 +107,7 @@ def generator_cnn_model(train_samples,validation_samples):
     model.save('generator_model.h5')
 def get_train_validation_samples():
     samples = []    
-    with open('../data/driving_log.csv') as csv_file:
+    with open('../COLLECTED_DATA/driving_log.csv') as csv_file:
         reader = csv.DictReader(csv_file)
         for line in reader:
             samples.append(line)
