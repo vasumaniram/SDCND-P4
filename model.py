@@ -105,8 +105,8 @@ def generator_cnn_model(train_samples,validation_samples):
     from keras.layers import Flatten, Dense, Lambda, Convolution2D, Cropping2D, Dropout
     from keras.layers.pooling import MaxPooling2D
     model = Sequential()
-    model.add(Lambda(lambda x : (x / 255.0) - 0.5,input_shape=(160,320,3)))
-    model.add(Cropping2D(cropping=((70,25),(0,0))))
+    model.add(Lambda(lambda x : (x / 255.0) - 0.5,input_shape=(160,320,3))) # Normalization layer - Mean Centered
+    model.add(Cropping2D(cropping=((70,25),(0,0)))) # Cropping only the ROI area
     
     model.add(Convolution2D(24,5,5,subsample=(2,2),activation='relu'))
     model.add(Convolution2D(36,5,5,subsample=(2,2),activation='relu'))
@@ -148,8 +148,8 @@ def generator_pipeline():
 def pipeline():    
     X_train,y_train = get_training_data()
     print(len(y_train))
-    #cnn_model(X_train,y_train)
-#generator_pipeline()
-pipeline()
+    cnn_model(X_train,y_train)
+generator_pipeline()
+#pipeline()
     
     
